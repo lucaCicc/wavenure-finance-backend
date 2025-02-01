@@ -1,6 +1,6 @@
 import express, { Express } from "express";
 import { PORT } from "./secrets";
-import rootRouter from "./routes";
+import rootRouter from "./routes/main.route";
 import { PrismaClient } from "@prisma/client";
 import { errorMiddleware } from "./middelwares/errors";
 

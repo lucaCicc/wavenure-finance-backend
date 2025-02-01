@@ -1,26 +1,19 @@
-import { NextFunction, Request, Response } from "express";
 import { prismaCLient } from "../..";
+import { ErrorCodes } from "../../exceptions/http-execption";
+import { BadRequestsException } from "../../exceptions/bad-requests";
 import { hashSync } from "bcrypt";
 
-import { BadRequestsException } from "../../exceptions/bad-requests";
-import { ErrorCodes } from "../../exceptions/http-execption";
-import { SignUpSchema } from "../../schema/users";
+interface SignupArgs {
+  password: string;
+  email: string;
+  name: string;
+}
 
 /**
-
-/**
- * Signup
+ *
  *
  */
-export const signup = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const validateData = SignUpSchema.parse(req.body);
-
-  const { email, password, name } = validateData;
-
+export const signup = async ({ email, password, name }: SignupArgs) => {
   let user = await prismaCLient.user.findFirst({ where: { email } });
 
   if (user) {
@@ -38,5 +31,5 @@ export const signup = async (
     },
   });
 
-  res.json(user);
+  return user;
 };

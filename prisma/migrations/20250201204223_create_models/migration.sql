@@ -40,7 +40,7 @@ CREATE TABLE "Expense" (
 
 -- CreateTable
 CREATE TABLE "Budget" (
-    "id" TEXT NOT NULL,
+    "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "amount" DOUBLE PRECISION NOT NULL,
     "currency" TEXT NOT NULL,

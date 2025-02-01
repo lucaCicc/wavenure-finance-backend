@@ -1,26 +1,22 @@
-import { NextFunction, Request, Response } from "express";
-
 import { compareSync } from "bcrypt";
-import * as jwt from "jsonwebtoken";
-import { JWT_SECRET } from "../../secrets";
-import { BadRequestsException } from "../../exceptions/bad-requests";
-import { ErrorCodes } from "../../exceptions/http-execption";
 import { prismaCLient } from "../..";
+import { ErrorCodes } from "../../exceptions/http-execption";
 import { NotFoundException } from "../../exceptions/not-found";
+import { BadRequestsException } from "../../exceptions/bad-requests";
 import { TokenPayload } from "../../types/auth";
-import { LoginSchema } from "../../schema/users";
+import { JWT_SECRET } from "../../secrets";
+import * as jwt from "jsonwebtoken";
+
+interface LoginArgs {
+  password: string;
+  email: string;
+}
 
 /**
- * Login
+ *
  *
  */
-export const login = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const { email, password } = LoginSchema.parse(req.body);
-
+export const login = async ({ email, password }: LoginArgs) => {
   let user = await prismaCLient.user.findFirst({ where: { email } });
 
   if (!user) {
@@ -40,5 +36,8 @@ export const login = async (
 
   const token = jwt.sign(tokenPayload, JWT_SECRET);
 
-  res.json({ user, token });
+  return {
+    user,
+    token,
+  };
 };
