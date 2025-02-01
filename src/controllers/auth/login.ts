@@ -8,6 +8,7 @@ import { ErrorCodes } from "../../exceptions/http-execption";
 import { prismaCLient } from "../..";
 import { NotFoundException } from "../../exceptions/not-found";
 import { TokenPayload } from "../../types/auth";
+import { LoginSchema } from "../../schema/users";
 
 /**
  * Login
@@ -18,7 +19,7 @@ export const login = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { email, password } = req.body;
+  const { email, password } = LoginSchema.parse(req.body);
 
   let user = await prismaCLient.user.findFirst({ where: { email } });
 

@@ -14,8 +14,62 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  name     String
+  id       Int      @id @default(autoincrement())
+  email    String   @unique
   password String
-  email    String @unique
+  name     String
+  wallets  Wallet[]
+  Budget   Budget[]
+}
+
+model Wallet {
+  id             Int       @id @default(autoincrement())
+  name           String
+  initialBalance Float
+  currency       String
+  userId         Int
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expenses       Expense[]
+}
+
+model Expense {
+  id       Int             @id @default(autoincrement())
+  amount   Float
+  date     DateTime        @default(now())
+  note     String?
+  type     ExpenseType
+  category ExpenseCategory
+  walletId Int
+  wallet   Wallet          @relation(fields: [walletId], references: [id], onDelete: Cascade)
+}
+
+enum ExpenseType {
+  INCOME
+  EXPENSE
+}
+
+enum ExpenseCategory {
+  WORK
+  FAMILY
+  GIFT
+  SHOPPING
+  HOME
+  CAR
+  FOOD
+  TRAVEL
+  TRANSPORT
+  OTHER
+  SALARY
+  LOAN
+  EXTRA_INCOME
+}
+
+model Budget {
+  id       String          @id @default(uuid())
+  name     String
+  amount   Float
+  currency String
+  category ExpenseCategory
+  userId   Int
+  user     User            @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

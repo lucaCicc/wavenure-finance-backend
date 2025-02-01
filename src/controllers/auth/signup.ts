@@ -17,9 +17,9 @@ export const signup = async (
   res: Response,
   next: NextFunction
 ) => {
-  SignUpSchema.parse(req.body);
+  const validateData = SignUpSchema.parse(req.body);
 
-  const { email, password, name } = req.body;
+  const { email, password, name } = validateData;
 
   let user = await prismaCLient.user.findFirst({ where: { email } });
 
