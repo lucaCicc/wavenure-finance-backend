@@ -1,34 +1,42 @@
 import { NextFunction, Response, Request } from "express";
-import { ErrorCodes, HttpExecption } from "../exceptions/http-execption";
+import { ErrorCodes } from "../exceptions/http-execption";
 import { UnauthorizedException } from "../exceptions/unauthorized";
 import * as jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../secrets";
 import { prismaCLient } from "..";
+import { TokenPayload } from "../types/auth";
 
-export const authMiddleware = async (
-  error: HttpExecption,
-  req: any,
+const authMiddleware = async (
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
   const token = req.headers.authorization;
 
-  if (token) {
-    try {
-      const payload = jwt.verify(token, JWT_SECRET) as any;
+  if (!token)
+    return next(
+      new UnauthorizedException("Unauthorize", ErrorCodes.UNAUTHORIZED)
+    );
 
-      let user = await prismaCLient.user.findFirst({
-        where: { id: payload.userId },
-      });
+  try {
+    const payload = jwt.verify(token, JWT_SECRET) as TokenPayload;
 
-      if (!user) {
-        next(new UnauthorizedException("Unauthorize", ErrorCodes.UNAUTHORIZED));
-      }
+    let user = await prismaCLient.user.findFirst({
+      where: { id: payload.userId },
+    });
 
-      // To attach the user to the current request
-      req.user = user;
-    } catch (error) {}
+    if (!user) {
+      return next(
+        new UnauthorizedException("Unauthorize", ErrorCodes.UNAUTHORIZED)
+      );
+    }
+
+    // To attach the user to the current request
+    req.user = user;
+    next();
+  } catch (error) {
+    next(new UnauthorizedException("Unauthorize", ErrorCodes.UNAUTHORIZED));
   }
-
-  next(new UnauthorizedException("Unauthorize", ErrorCodes.UNAUTHORIZED));
 };
+
+export default authMiddleware;

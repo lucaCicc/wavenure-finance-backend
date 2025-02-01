@@ -7,6 +7,7 @@ import { BadRequestsException } from "../../exceptions/bad-requests";
 import { ErrorCodes } from "../../exceptions/http-execption";
 import { prismaCLient } from "../..";
 import { NotFoundException } from "../../exceptions/not-found";
+import { TokenPayload } from "../../types/auth";
 
 /**
  * Login
@@ -32,12 +33,11 @@ export const login = async (
     );
   }
 
-  const token = jwt.sign(
-    {
-      userId: user.id,
-    },
-    JWT_SECRET
-  );
+  const tokenPayload: TokenPayload = {
+    userId: user.id,
+  };
+
+  const token = jwt.sign(tokenPayload, JWT_SECRET);
 
   res.json({ user, token });
 };
