@@ -1,0 +1,29 @@
+import { NextFunction, Request, Response } from "express";
+import { ErrorCodes, HttpExecption } from "../exceptions/http-execption";
+import { InternalException } from "../exceptions/internal-exception";
+
+/**
+ *
+ *
+ */
+export const errorHandler = (method: Function) => {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      await method(req, res, next);
+    } catch (error: any) {
+      let execption: HttpExecption;
+
+      if (error instanceof HttpExecption) {
+        execption = error;
+      } else {
+        execption = new InternalException(
+          "Something went wrong!",
+          error,
+          ErrorCodes.INCORRECT_PASSWORD
+        );
+      }
+
+      next(execption);
+    }
+  };
+};
