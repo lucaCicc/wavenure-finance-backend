@@ -3,7 +3,7 @@ import { HttpExecption } from "../exceptions/http-execption";
 
 export const errorMiddleware = (
   error: HttpExecption,
-  req: Request,
+  req: any,
   res: Response,
   next: NextFunction
 ) => {

@@ -11,7 +11,7 @@ import { ExpenseServices } from "../services/expense";
  *
  */
 export const createExpenseController = async (
-  req: Request,
+  req: any,
   res: Response,
   next: NextFunction
 ) => {
@@ -31,7 +31,7 @@ export const createExpenseController = async (
  *
  */
 export const deleteExpenseController = async (
-  req: Request,
+  req: any,
   res: Response,
   _: NextFunction
 ) => {
@@ -51,7 +51,7 @@ export const deleteExpenseController = async (
  *
  */
 export const getWalletExpensesController = async (
-  req: Request,
+  req: any,
   res: Response,
   next: NextFunction
 ) => {
@@ -74,7 +74,7 @@ export const getWalletExpensesController = async (
  *
  */
 export const updateExpenseContainer = async (
-  req: Request,
+  req: any,
   res: Response,
   _: NextFunction
 ) => {

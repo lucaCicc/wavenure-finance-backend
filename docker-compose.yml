@@ -1,17 +1,46 @@
-version: "3.8"
+# see https://www.prisma.io/docs/guides/using-prisma-in-docker
 
 services:
+  backend:
+    container_name: backend_node
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    env_file:
+      - .env.prod
+    stdin_open: true
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - prisma-network
+
   db:
     image: postgres:latest
     container_name: postgres_db
+    restart: always
+    tty: true
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydb
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "5432:5432"
+    networks:
+      - prisma-network
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U prisma -d postgres"]
+      interval: 5s
+      timeout: 2s
+      retries: 20
 
 volumes:
   pgdata:
+
+networks:
+  prisma-network:
+    name: prisma-network

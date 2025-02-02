@@ -10,7 +10,7 @@ import { WalletServices } from "../services/wallet";
  *
  */
 export const createWalletController = async (
-  req: Request,
+  req: any,
   res: Response,
   next: NextFunction
 ) => {
@@ -34,7 +34,7 @@ export const createWalletController = async (
  *
  */
 export const deleteWalletController = async (
-  req: Request,
+  req: any,
   res: Response,
   next: NextFunction
 ) => {
@@ -49,7 +49,7 @@ export const deleteWalletController = async (
  *
  */
 export const getWalletByIdController = async (
-  req: Request,
+  req: any,
   res: Response,
   next: NextFunction
 ) => {
@@ -70,7 +70,7 @@ export const getWalletByIdController = async (
  *
  */
 export const getWalletListController = async (
-  req: Request,
+  req: any,
   res: Response,
   next: NextFunction
 ) => {
@@ -91,7 +91,7 @@ export const getWalletListController = async (
  *
  */
 export const updateWalletController = async (
-  req: Request,
+  req: any,
   res: Response,
   next: NextFunction
 ) => {

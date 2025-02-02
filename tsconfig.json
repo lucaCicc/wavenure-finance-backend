@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "typeRoots": ["./types"],
     "outDir": "dist",
     "target": "es2016",
     "module": "commonjs",
@@ -9,6 +10,6 @@
     "skipLibCheck": true,
     "sourceMap": false
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src", "types"],
+  "exclude": ["node_modules", "./types"]
 }

@@ -3,7 +3,7 @@ import { prismaCLient } from "../..";
 import { ErrorCodes } from "../../exceptions/http-execption";
 import { NotFoundException } from "../../exceptions/not-found";
 import { BadRequestsException } from "../../exceptions/bad-requests";
-import { TokenPayload } from "../../types/auth";
+import { TokenPayload } from "../../../types/auth";
 import { JWT_SECRET } from "../../secrets";
 import * as jwt from "jsonwebtoken";
 

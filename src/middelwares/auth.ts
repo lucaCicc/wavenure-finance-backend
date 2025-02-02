@@ -4,13 +4,9 @@ import { UnauthorizedException } from "../exceptions/unauthorized";
 import * as jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../secrets";
 import { prismaCLient } from "..";
-import { TokenPayload } from "../types/auth";
+import { TokenPayload } from "../../types/auth";
 
-const authMiddleware = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const authMiddleware = async (req: any, _: Response, next: NextFunction) => {
   const token = req.headers.authorization;
 
   if (!token)

@@ -8,7 +8,7 @@ import { AuthServices } from "../services/auth";
  *
  */
 export const loginController = async (
-  req: Request,
+  req: any,
   res: Response,
   _: NextFunction
 ) => {
@@ -23,7 +23,7 @@ export const loginController = async (
  *
  */
 export const signupController = async (
-  req: Request,
+  req: any,
   res: Response,
   _: NextFunction
 ) => {

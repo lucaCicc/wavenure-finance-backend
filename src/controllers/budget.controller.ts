@@ -10,7 +10,7 @@ import { BudgetServices } from "../services/budget";
  *
  */
 export const createBudgetController = async (
-  req: Request,
+  req: any,
   res: Response,
   next: NextFunction
 ) => {
@@ -30,7 +30,7 @@ export const createBudgetController = async (
  *
  */
 export const deleteBudgetController = async (
-  req: Request,
+  req: any,
   res: Response,
   _: NextFunction
 ) => {
@@ -49,7 +49,7 @@ export const deleteBudgetController = async (
  *
  */
 export const updateBudgetController = async (
-  req: Request,
+  req: any,
   res: Response,
   _: NextFunction
 ) => {
