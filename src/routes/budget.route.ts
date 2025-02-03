@@ -6,6 +6,7 @@ import {
   createBudgetController,
   deleteBudgetController,
   updateBudgetController,
+  getBudgetListController,
 } from "../controllers/budget.controller";
 
 const budgetRouters: Router = Router();
@@ -23,5 +24,7 @@ budgetRouters.put(
   [authMiddleware],
   errorHandler(updateBudgetController)
 );
+
+budgetRouters.get("/", [authMiddleware], errorHandler(getBudgetListController));
 
 export default budgetRouters;

@@ -17,7 +17,7 @@ interface Args {
  *
  */
 export const getWalletExpenses = async ({ data, userId, walletId }: Args) => {
-  const { type, startDate, endDate } = data;
+  const { amount, category, startDate, endDate } = data;
 
   const wallet = await prismaCLient.wallet.findFirst({
     where: { id: walletId, userId },
@@ -26,19 +26,28 @@ export const getWalletExpenses = async ({ data, userId, walletId }: Args) => {
   if (!wallet) {
     throw new UnauthorizedException(
       `Cannot access expenses for Wallet (id: ${walletId})`,
-      ErrorCodes.UNAUTHORIZED
+      ErrorCodes.UNPROCESSABLE_ENTITY
     );
   }
 
+  const filters: any = { walletId };
+
+  if (category) {
+    filters.category = category;
+  }
+
+  if (amount) {
+    filters.amount = +amount;
+  }
+
+  if (startDate || endDate) {
+    filters.date = {};
+    if (startDate) filters.date.gte = startDate;
+    if (endDate) filters.date.lte = endDate;
+  }
+
   const expenses = await prismaCLient.expense.findMany({
-    where: {
-      walletId,
-      type: type,
-      date: {
-        gte: startDate,
-        lte: endDate,
-      },
-    },
+    where: filters,
     orderBy: { date: "desc" },
   });
 

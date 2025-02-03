@@ -19,6 +19,7 @@ CREATE TABLE "Wallet" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "initialBalance" DOUBLE PRECISION NOT NULL,
+    "currentBalance" DOUBLE PRECISION NOT NULL,
     "currency" TEXT NOT NULL,
     "userId" INTEGER NOT NULL,
 

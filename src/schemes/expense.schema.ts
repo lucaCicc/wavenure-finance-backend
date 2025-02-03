@@ -33,5 +33,6 @@ export const WalletExpensesSchema = z.object({
     .string()
     .regex(iso8601Regex, "Invalid date format. Expected ISO 8601")
     .optional(),
-  type: z.nativeEnum(ExpenseType).optional(),
+  category: z.nativeEnum(ExpenseCategory).optional(),
+  amount: z.string().optional(),
 });

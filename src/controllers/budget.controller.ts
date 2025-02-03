@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import {
   CreateBudgetSchema,
   UpdateBudgetSchema,
@@ -63,5 +63,24 @@ export const updateBudgetController = async (
   res.json({
     message: "Budget updated successfuly",
     data: budget,
+  });
+};
+
+/**
+ * Get Budgets
+ *
+ */
+export const getBudgetListController = async (
+  req: any,
+  res: Response,
+  _: NextFunction
+) => {
+  const budgets = await BudgetServices.getBudgetList({
+    userId: req?.user?.id,
+  });
+
+  res.json({
+    message: "Budgets Listy",
+    data: budgets,
   });
 };

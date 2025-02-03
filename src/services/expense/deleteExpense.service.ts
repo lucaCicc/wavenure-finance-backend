@@ -26,7 +26,7 @@ export const deleteExpense = async ({ userId, expenseId, walletId }: Args) => {
   if (deletedExpense.count === 0) {
     throw new UnauthorizedException(
       `Cannot delete this Expense (id: ${expenseId})`,
-      ErrorCodes.UNAUTHORIZED
+      ErrorCodes.UNPROCESSABLE_ENTITY
     );
   }
 

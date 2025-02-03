@@ -37,7 +37,7 @@ export const updateExpense = async ({
   if (updatedExpense.count === 0) {
     throw new UnauthorizedException(
       "Cannot update this Expense",
-      ErrorCodes.UNAUTHORIZED
+      ErrorCodes.UNPROCESSABLE_ENTITY
     );
   }
 

@@ -24,15 +24,32 @@ export const createExpense = async ({ data, userId, walletId }: Args) => {
   if (!wallet) {
     throw new UnauthorizedException(
       `Cannot create the Expense on Wallet (id: ${walletId})`,
-      ErrorCodes.UNAUTHORIZED
+      ErrorCodes.UNPROCESSABLE_ENTITY
     );
   }
 
-  const newExpense = await prismaCLient.expense.create({
-    data: {
-      ...data,
-      walletId,
-    },
+  const newExpense = await prismaCLient.$transaction(async (prisma) => {
+    const newExpense = await prismaCLient.expense.create({
+      data: {
+        ...data,
+        walletId,
+      },
+    });
+
+    const amount = newExpense.type === "EXPENSE" ? +data.amount : -data.amount;
+
+    await prismaCLient.wallet.updateMany({
+      where: {
+        id: walletId,
+        userId,
+      },
+      data: {
+        ...wallet,
+        currentBalance: wallet.currentBalance + amount,
+      },
+    });
+
+    return newExpense;
   });
 
   return newExpense;

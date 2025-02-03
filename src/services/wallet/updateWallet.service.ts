@@ -28,7 +28,7 @@ export const updateWallet = async ({ data, userId, walletId }: Args) => {
   if (updatedWallet.count === 0) {
     throw new UnauthorizedException(
       `Cannot update this Wallet (id: ${walletId})`,
-      ErrorCodes.UNAUTHORIZED
+      ErrorCodes.UNPROCESSABLE_ENTITY
     );
   }
 

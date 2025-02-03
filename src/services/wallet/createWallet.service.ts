@@ -17,6 +17,7 @@ export const createWallet = async ({ data, userId }: Args) => {
   const wallet = await prismaCLient.wallet.create({
     data: {
       ...data,
+      currentBalance: data.initialBalance,
       userId,
     },
   });
