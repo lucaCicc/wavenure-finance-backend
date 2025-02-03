@@ -62,3 +62,8 @@ ALTER TABLE "Expense" ADD CONSTRAINT "Expense_walletId_fkey" FOREIGN KEY ("walle
 
 -- AddForeignKey
 ALTER TABLE "Budget" ADD CONSTRAINT "Budget_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- add user
+INSERT INTO "User" (email, "password", name) 
+VALUES
+  ('test.test@gmail.com', '$2b$10$xwJO99UsOueokvwRIHXzcuY8FD.6HeatSf5ljTCQhffATllwNzuTu', 'Marco')
