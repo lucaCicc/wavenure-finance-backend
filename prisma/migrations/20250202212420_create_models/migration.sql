@@ -66,4 +66,4 @@ ALTER TABLE "Budget" ADD CONSTRAINT "Budget_userId_fkey" FOREIGN KEY ("userId") 
 -- add user
 INSERT INTO "User" (email, "password", name) 
 VALUES
-  ('test.test@gmail.com', '$2b$10$xwJO99UsOueokvwRIHXzcuY8FD.6HeatSf5ljTCQhffATllwNzuTu', 'Marco')
+  ('test.test@gmail.com', '$2b$10$yYltopssp7Sarb44uCkrpOVQCKPFZdxHXav6adiez9N5Xjd1fTl6m', 'Marco')
