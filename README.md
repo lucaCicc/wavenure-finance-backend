@@ -1,1 +1,1 @@
-[# wavenure-finance-backend](https://github.com/lucaCicc/wavenure-finance-app)
+see https://github.com/lucaCicc/wavenure-finance-app for readme
